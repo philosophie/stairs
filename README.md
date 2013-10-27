@@ -32,9 +32,7 @@ setup :secret_token
 setup :s3
 setup :zencoder, required: false
 
-setup :misc do
-  env "CHECK_IT", provide "Cool check it value"
-end
+env "CHECK_IT", provide "Cool check it value"
 
 puts "Sweet you're good to go. Just run `rails s` and `sidekiq` to get rolling!"
 ```
