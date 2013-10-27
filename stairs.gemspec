@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["nick@gophilosophie.com"]
   spec.description   = "A DSL and collection of plugins for easy setup of projects on new development environments."
   spec.summary       = "A DSL and collection of plugins for easy setup of projects on new development environments."
-  spec.homepage      = ""
+  spec.homepage      = "http://github.com/patbenatar/stairs"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
