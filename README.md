@@ -105,6 +105,14 @@ setup :s3
 
 ## Plugins for common setups
 
+### Included plugins
+
+* `:s3` interactive prompt for setting AWS + S3 bucket access credentials
+* `:balanced`: automatically creates a test Marketplace on Balanced
+* `:secret_token`: sets a secure random secret token
+
+### Defining custom plugins
+
 ```ruby
 require "fog"
 class S3Setup < Stairs::Step
