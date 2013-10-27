@@ -4,6 +4,7 @@ module Stairs
   module Steps
     class Balanced < Step
       title "Balanced Payments"
+      description "Creates a test Marketplace on Balanced"
 
       def run
         ::Balanced.configure(api_key.secret)
