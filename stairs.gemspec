@@ -22,5 +22,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   spec.add_dependency "highline", "~> 1.6.20"
-  spec.add_dependency "activesupport", "> 3.2.0"
+  spec.add_dependency "activesupport", ">= 3.2.0"
+
+  # Plugin dependencies
+  # TODO better way to manage these?
+  spec.add_dependency "balanced", "~> 0.7.4"
 end
