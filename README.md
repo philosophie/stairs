@@ -111,7 +111,10 @@ setup :s3
 
 ## Plugins for common setups
 
+### Built-in
 * `:secret_token` sets a secure random secret token
+
+### Available as extension gems
 * `:s3` interactive prompt for setting AWS + S3 bucket access credentials:
   [patbenatar/stairs-steps-s3][s3]
 * `:balanced`: automatically creates a test Marketplace on Balanced:
