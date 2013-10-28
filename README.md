@@ -41,7 +41,8 @@ puts "Sweet you're good to go. Just run `rails s` and `sidekiq` to get rolling!"
 
 ### Example CLI
 
-Given the above script, the CLI would look like this:
+Given the above script, the CLI might look like this. __Note:__ some of this
+is desired future functionality (bundle/db tasks, spacing, last words).
 
 ```
 $ rake newb
@@ -69,7 +70,7 @@ Run rails s and sidekiq to get rolling!
 ### Collecting values
 ```ruby
 value = provide "Something"
-value = provide "Another", required: false
+value = provide "Another", required: false # Not fully implemented
 provide "More", default: "a-default"
 ```
 
@@ -119,6 +120,8 @@ setup :s3
   [patbenatar/stairs-steps-s3][s3]
 * `:balanced` automatically creates a test Marketplace on Balanced:
   [patbenatar/stairs-steps-balanced][balanced]
+* `:facebook` interactive prompt for setting Facebook app credentials:
+  [patbenatar/stairs-steps-facebook][facebook]
 
 ### Defining custom plugins
 
@@ -136,3 +139,4 @@ extension gems for examples.
 
 [s3]: http://github.com/patbenatar/stairs-steps-s3
 [balanced]: http://github.com/patbenatar/stairs-steps-balanced
+[facebook]: http://github.com/patbenatar/stairs-steps-facebook
