@@ -7,7 +7,7 @@ environments.
 
 1. Install gem `stairs`
 
-1. Require tasks in Rakefile
+1. Require tasks in `Rakefile`
 ```ruby
 require "stairs/tasks"
 ```
