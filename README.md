@@ -117,7 +117,7 @@ setup :s3
 ### Available as extension gems
 * `:s3` interactive prompt for setting AWS + S3 bucket access credentials:
   [patbenatar/stairs-steps-s3][s3]
-* `:balanced`: automatically creates a test Marketplace on Balanced:
+* `:balanced` automatically creates a test Marketplace on Balanced:
   [patbenatar/stairs-steps-balanced][balanced]
 
 ### Defining custom plugins
