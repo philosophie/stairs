@@ -12,7 +12,8 @@ environments.
 require "stairs/tasks"
 ```
 
-1. Define `setup.rb` in the root of your project
+1. [Define your script](#defining-scripts) in `setup.rb` at the root of your
+   project
 
 ## Usage
 
@@ -24,7 +25,8 @@ $ rake newb
 
 ## Defining scripts
 
-A script composes many steps that setup a project.
+A script composes many steps that setup a project. __Note:__ optional steps are
+not yet implemented.
 
 ```ruby
 setup :secret_token
@@ -92,61 +94,34 @@ write_line "more: false", "config/settings.yml"
 ```
 
 ### Defining setup steps
+
+__Note:__ this block syntax is not yet implemented, use predefined steps for
+now.
+
 ```ruby
 setup :a_cool_service do
   ## ..
 end
 ```
 
-#### Using predefined steps
+#### Using predefined steps (aka plugins)
 ```ruby
 setup :s3
 ```
 
 ## Plugins for common setups
 
-### Included plugins
-
-* `:s3` interactive prompt for setting AWS + S3 bucket access credentials
-* `:balanced`: automatically creates a test Marketplace on Balanced
-* `:secret_token`: sets a secure random secret token
+* `:secret_token` sets a secure random secret token
+* `:s3` interactive prompt for setting AWS + S3 bucket access credentials:
+  [patbenatar/stairs-steps-s3][s3]
+* `:balanced`: automatically creates a test Marketplace on Balanced:
+  [patbenatar/stairs-steps-balanced][balanced]
 
 ### Defining custom plugins
 
-```ruby
-require "fog"
-class S3Setup < Stairs::Step
-  title "S3"
-  description "Setup AWS tokens and bucket"
-
-  def run
-    @key = provide "AWS access key"
-    @secret = provide "AWS secret"
-
-    choice "Do you have an existing bucket?" do |yes|
-      env "S3_BUCKET", if yes
-        provide "Bucket name", default: "app-dev"
-      else
-        create_bucket
-      end
-    end
-
-    env "AWS_ACCESS_KEY", @key
-    env "AWS_SECRET", @secret
-  end
-
-  private
-
-  def create_bucket
-    # use @key and @secret to create bucket via API
-  end
-end
-```
-
-## To think about...
-
-* How to manage gem dependencies (S3Setup for example requires fog to be
-  installed)
+Steps inherit from `Stairs::Step`, have a title, description, and
+implement the `run` method. See those included and in the various
+extension gems for examples.
 
 ## Contributing
 
@@ -155,3 +130,6 @@ end
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+[s3]: http://github.com/patbenatar/stairs-steps-s3
+[balanced]: http://github.com/patbenatar/stairs-steps-balanced
