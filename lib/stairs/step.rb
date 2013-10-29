@@ -79,5 +79,10 @@ module Stairs
       klass = "Stairs::Steps::#{step_name.to_s.camelize}".constantize
       klass.new.run!
     end
+
+    def finish(message)
+      puts "== All done!"
+      puts message
+    end
   end
 end
