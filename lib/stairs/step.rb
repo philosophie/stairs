@@ -3,21 +3,31 @@ require "highline/import"
 module Stairs
   class Step
     def run!
-      stairs_info "\n== Running #{self.class.title}"
+      stairs_info "\n== Running #{step_title}"
       run
-      stairs_info "== Completed #{self.class.title}\n"
+      stairs_info "== Completed #{step_title}\n"
     end
+
+    attr_writer :step_title, :step_description
 
     private
 
-    class_attribute :title, :description
+    class_attribute :step_title, :step_description
 
     def self.title(title)
-      self.title = title
+      self.step_title = title
     end
 
     def self.description(description)
-      self.description = description
+      self.step_description = description
+    end
+
+    def step_title
+      @step_title || self.class.step_title
+    end
+
+    def step_description
+      @step_description || self.class.step_description
     end
 
     # Prompt user to provide input
@@ -61,7 +71,7 @@ module Stairs
       stairs_info "== Completed #{task}\n"
     end
 
-    # Set or update env var in .rbenv-vars
+    # Set or update env var
     def env(name, value)
       Stairs.configuration.env_adapter.set name, value
     end
@@ -77,10 +87,18 @@ module Stairs
     end
 
     # Embed a step where step_name is a symbol that can be resolved to a class
-    # in Stairs::Steps
-    def setup(step_name)
-      klass = "Stairs::Steps::#{step_name.to_s.camelize}".constantize
-      klass.new.run!
+    # in Stairs::Steps or a block is provided to be executed in an instance
+    # of Step
+    def setup(step_name, &block)
+      if block_given?
+        Step.new.tap do |step|
+          step.define_singleton_method :run, &block
+          step.step_title = step_name.to_s.titleize
+        end.run!
+      else
+        klass = "Stairs::Steps::#{step_name.to_s.camelize}".constantize
+        klass.new.run!
+      end
     end
 
     def finish(message)
