@@ -30,14 +30,20 @@ A script composes many steps that setup a project. __Note:__ optional steps are
 not yet implemented.
 
 ```ruby
+bundle
+
 setup :secret_token
 
 setup :s3
 setup :zencoder, required: false
 
-env "CHECK_IT", provide "Cool check it value"
+setup :misc do
+  env "CHECK_IT", provide "Cool check it value"
+end
 
-finish "Just run `rails s` and `sidekiq` to get rolling!"
+rake "db:setup"
+
+finish "Just run rails s and sidekiq to get rolling!"
 ```
 
 ### Example CLI
@@ -47,20 +53,32 @@ is desired future functionality (bundle/db tasks, spacing, last words).
 
 ```
 $ rake newb
-... bundle install
-... db setup + seed
+Looks like you're using rbenv to manage environment variables. Is this correct? (Y/N): Y
 
-== Starting S3 Setup
+= Running script setup.rb
+
+== Running bundle
+...
+== Completed bundle
+
+== Running S3
 AWS access key: 39u39d9u291
 AWS secret: 19jd920i10is0i01i0s01ks0kfknkje
 Do you have an existing bucket? (Y/N): Y
 Bucket name (leave blank for app-dev): my-cool-bucket
+== Completed S3
 
 == Starting Zencoder
 This step is optional, would you like to perform it? (Y/N): N
+== Completed Zencoder
 
-== Starting misc
+== Starting Misc
 Cool check it value: w00t
+== Completed Misc
+
+== Running db:setup
+...
+== Completed db:setup
 
 == All done!
 Run rails s and sidekiq to get rolling!
@@ -114,12 +132,9 @@ finish "Now that you're done, go have a drink!"
 
 ### Defining setup steps
 
-__Note:__ this block syntax is not yet implemented, use predefined steps for
-now.
-
 ```ruby
 setup :a_cool_service do
-  ## ..
+  # ...
 end
 ```
 
