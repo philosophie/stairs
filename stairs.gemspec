@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "highline", "~> 1.6.20"
   spec.add_dependency "activesupport", ">= 3.2.0"
+  spec.add_dependency "colorize", "~> 0.6.0"
 end

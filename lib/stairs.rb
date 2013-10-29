@@ -1,5 +1,6 @@
 require "stairs/version"
 require "active_support/core_ext"
+require "colorize"
 
 module Stairs
   autoload :Step, "stairs/step"

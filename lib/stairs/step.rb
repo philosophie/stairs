@@ -3,8 +3,9 @@ require "highline/import"
 module Stairs
   class Step
     def run!
-      puts "== Running #{self.class.title}"
+      stairs_info "\n== Running #{self.class.title}"
       run
+      stairs_info "== Completed #{self.class.title}\n"
     end
 
     private
@@ -27,7 +28,7 @@ module Stairs
       prompt << " (leave blank for #{options[:default]})" if options[:default]
       prompt << ": "
 
-      response = ask(prompt) { |q| q.validate = /\S+/ if required }
+      response = ask(prompt.blue) { |q| q.validate = /\S+/ if required }
       response.present? ? response : options[:default]
     end
 
@@ -35,7 +36,7 @@ module Stairs
     # TODO shouldn't care about case
     def choice(question, choices=["Y", "N"])
       prompt = "#{question} (#{choices.join("/")}): "
-      response = ask(prompt) { |q| q.in = choices }
+      response = ask(prompt.blue) { |q| q.in = choices }
 
       case response
       when "Y"
@@ -49,13 +50,15 @@ module Stairs
     end
 
     def bundle
-      puts "== Running bundle"
+      stairs_info "\n== Running bundle"
       system "bundle"
+      stairs_info "== Completed bundle\n"
     end
 
     def rake(task)
-      puts "== Running #{task}"
+      stairs_info "\n== Running #{task}"
       system "rake #{task}"
+      stairs_info "== Completed #{task}\n"
     end
 
     # Set or update env var in .rbenv-vars
@@ -81,8 +84,12 @@ module Stairs
     end
 
     def finish(message)
-      puts "== All done!"
-      puts message
+      puts "\n== All done!".green
+      puts message.green
+    end
+
+    def stairs_info(message)
+      puts message.light_black
     end
   end
 end
