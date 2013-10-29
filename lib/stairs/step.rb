@@ -48,6 +48,16 @@ module Stairs
       response
     end
 
+    def bundle
+      puts "== Running bundle"
+      system "bundle"
+    end
+
+    def rake(task)
+      puts "== Running #{task}"
+      system "rake #{task}"
+    end
+
     # Set or update env var in .rbenv-vars
     def env(name, value)
       Stairs.configuration.env_adapter.set name, value
