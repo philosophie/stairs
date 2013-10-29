@@ -50,32 +50,17 @@ module Stairs
 
     # Set or update env var in .rbenv-vars
     def env(name, value)
-      string = "#{name}=#{value}"
-
-      if File.exists? ".rbenv-vars"
-        contents = File.read ".rbenv-vars"
-        regexp = Regexp.new "^#{name}=(.*)$"
-        if contents.index regexp
-          contents.sub! regexp, string
-          write contents, ".rbenv-vars"
-          return
-        end
-      end
-
-      write_line string, ".rbenv-vars"
+      Stairs.configuration.env_adapter.set name, value
     end
 
     # Replace contents of file
     def write(string, filename)
-      File.truncate filename, 0 if File.exists? filename
-      write_line string, filename
+      Util::FileUtils.write(string, filename)
     end
 
     # Append line to file
     def write_line(string, filename)
-      File.open filename, "a" do |file|
-        file.puts string
-      end
+      Util::FileUtils.write_line(string, filename)
     end
 
     # Embed a step where step_name is a symbol that can be resolved to a class
