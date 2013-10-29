@@ -37,7 +37,7 @@ setup :zencoder, required: false
 
 env "CHECK_IT", provide "Cool check it value"
 
-puts "Sweet you're good to go. Just run `rails s` and `sidekiq` to get rolling!"
+finish "Just run `rails s` and `sidekiq` to get rolling!"
 ```
 
 ### Example CLI
@@ -93,6 +93,23 @@ env "NAME", value
 ```ruby
 write "awesome: true", "config/settings.yml"
 write_line "more: false", "config/settings.yml"
+```
+
+### Misc helpers
+
+Run bundle to install gems
+```ruby
+bundle
+```
+
+Run rake tasks
+```ruby
+rake "task_name"
+```
+
+Display a message when setup completes
+```ruby
+finish "Now that you're done, go have a drink!"
 ```
 
 ### Defining setup steps
