@@ -1,7 +1,8 @@
 # Stairs
 
 A DSL and collection of plugins for easy setup of projects on new development
-environments.
+environments. Write a script that new devs can run for an interactive setup.
+For environment variables, Stairs supports rbenv-vars, RVM, and dotenv.
 
 ## Setup
 
