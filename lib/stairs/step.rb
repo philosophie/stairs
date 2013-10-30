@@ -78,12 +78,12 @@ module Stairs
 
     # Replace contents of file
     def write(string, filename)
-      Util::FileUtils.write(string, filename)
+      Util::FileMutation.write(string, filename)
     end
 
     # Append line to file
     def write_line(string, filename)
-      Util::FileUtils.write_line(string, filename)
+      Util::FileMutation.write_line(string, filename)
     end
 
     # Embed a step where step_name is a symbol that can be resolved to a class

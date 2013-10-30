@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rspec", "~> 4.0.3"
   spec.add_development_dependency "rb-fsevent", "~> 0.9.3"
   spec.add_development_dependency "awesome_print", "~> 1.2.0"
+  spec.add_development_dependency "fakefs", "~> 0.4.3"
 
   spec.add_dependency "highline", "~> 1.6.20"
   spec.add_dependency "activesupport", ">= 3.2.0"

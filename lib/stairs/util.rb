@@ -1,5 +1,5 @@
 module Stairs
   module Util
-    autoload :FileUtils, "stairs/util/file_utils"
+    autoload :FileMutation, "stairs/util/file_mutation"
   end
 end

@@ -7,7 +7,7 @@ module Stairs
       end
 
       def set(name, value)
-        Util::FileUtils.replace_or_append(
+        Util::FileMutation.replace_or_append(
           Regexp.new("^#{name}=(.*)$"),
           "#{name}=#{value}",
           ".rbenv-vars",

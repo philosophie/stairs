@@ -7,7 +7,7 @@ module Stairs
       end
 
       def set(name, value)
-        Util::FileUtils.replace_or_append(
+        Util::FileMutation.replace_or_append(
           Regexp.new("^export #{name}=(.*)$"),
           "export #{name}=#{value}",
           ".rvmrc",
