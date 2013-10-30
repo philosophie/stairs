@@ -183,3 +183,16 @@ extension gems for examples.
 [s3]: http://github.com/patbenatar/stairs-steps-s3
 [balanced]: http://github.com/patbenatar/stairs-steps-balanced
 [facebook]: http://github.com/patbenatar/stairs-steps-facebook
+
+## Credits
+
+### Contributors
+
+* [Nick Giancola](https://github.com/patbenatar)
+* [Brendan Loudermilk](https://github.com/bloudermilk)
+
+### Sponsor
+
+[![philosophie](http://patbenatar.github.io/showoff/images/philosophie.png)](http://gophilosophie.com)
+
+This gem is maintained partially during my open source time at [philosophie](http://gophilosophie.com).
