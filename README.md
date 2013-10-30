@@ -4,6 +4,9 @@ A DSL and collection of plugins for easy setup of projects on new development
 environments. Write a script that new devs can run for an interactive setup.
 For environment variables, Stairs supports rbenv-vars, RVM, and dotenv.
 
+[![Build Status](https://travis-ci.org/patbenatar/stairs.png?branch=master)](https://travis-ci.org/patbenatar/stairs)
+[![Code Climate](https://codeclimate.com/github/patbenatar/stairs.png)](https://codeclimate.com/github/patbenatar/stairs)
+
 ## Setup
 
 ### Rails
