@@ -3,9 +3,9 @@ require "highline/import"
 module Stairs
   class Step
     def run!
-      stairs_info "\n== Running #{step_title}"
+      stairs_info "== Running #{step_title}"
       run
-      stairs_info "== Completed #{step_title}\n"
+      stairs_info "== Completed #{step_title}"
     end
 
     attr_writer :step_title, :step_description
@@ -60,15 +60,15 @@ module Stairs
     end
 
     def bundle
-      stairs_info "\n== Running bundle"
+      stairs_info "== Running bundle"
       system "bundle"
-      stairs_info "== Completed bundle\n"
+      stairs_info "== Completed bundle"
     end
 
     def rake(task)
-      stairs_info "\n== Running #{task}"
+      stairs_info "== Running #{task}"
       system "rake #{task}"
-      stairs_info "== Completed #{task}\n"
+      stairs_info "== Completed #{task}"
     end
 
     # Set or update env var
@@ -102,7 +102,7 @@ module Stairs
     end
 
     def finish(message)
-      puts "\n== All done!".green
+      puts "== All done!".green
       puts message.green
     end
 

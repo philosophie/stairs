@@ -6,9 +6,8 @@ module Stairs
     end
 
     def run!
-      puts "\n= Running script #{filename}".light_black
+      puts "= Running script #{filename}".light_black
       run
-      puts "= Completed script #{filename}".light_black
     end
 
     def run
