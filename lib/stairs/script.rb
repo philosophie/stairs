@@ -10,11 +10,11 @@ module Stairs
       run
     end
 
+    private
+
     def run
       Step.new.instance_eval(script)
     end
-
-    private
 
     attr_reader :script, :filename
   end
