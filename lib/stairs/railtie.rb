@@ -1,5 +1,7 @@
 module Stairs
   class Railtie < Rails::Railtie
-    load "stairs/tasks.rb"
+    rake_tasks do
+      load "stairs/tasks.rb"
+    end
   end
 end
