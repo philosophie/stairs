@@ -21,3 +21,5 @@ module Stairs
     end
   end
 end
+
+require "stairs/railtie" if defined?(Rails)

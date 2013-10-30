@@ -6,15 +6,25 @@ For environment variables, Stairs supports rbenv-vars, RVM, and dotenv.
 
 ## Setup
 
-1. Install gem `stairs`
+### Rails
 
-1. Require tasks in `Rakefile`
+Add Stairs to your `Gemfile`:
+
+```ruby
+gem "stairs"
+```
+
+[Define your script](#defining-scripts) in `setup.rb` at the root of your
+project.
+
+### Not Rails
+
+Same as above, but you'll have to manually add the Stairs Rake tasks to your
+`Rakefile`.
+
 ```ruby
 require "stairs/tasks"
 ```
-
-1. [Define your script](#defining-scripts) in `setup.rb` at the root of your
-   project
 
 ## Usage
 
