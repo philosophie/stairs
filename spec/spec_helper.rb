@@ -10,7 +10,7 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
-  config.include MockStdout
+  config.include MockStdIO
 
   config.before(:all, &:silence_output)
   config.after(:all, &:enable_output)

@@ -1,5 +1,3 @@
-require "highline/import"
-
 module Stairs
   class Step
     def run!
@@ -9,8 +7,6 @@ module Stairs
     end
 
     attr_writer :step_title, :step_description
-
-    private
 
     class_attribute :step_title, :step_description
 
@@ -38,25 +34,13 @@ module Stairs
       prompt << " (leave blank for #{options[:default]})" if options[:default]
       prompt << ": "
 
-      response = ask(prompt.blue) { |q| q.validate = /\S+/ if required }
-      response.present? ? response : options[:default]
+      Stairs::Util::CLI.collect(prompt.blue, required: required) ||
+        options[:default]
     end
 
     # Prompt user to make a choice
-    # TODO shouldn't care about case
-    def choice(question, choices=["Y", "N"])
-      prompt = "#{question} (#{choices.join("/")}): "
-      response = ask(prompt.blue) { |q| q.in = choices }
-
-      case response
-      when "Y"
-        response = true
-      when "N"
-        response = false
-      end
-
-      yield response if block_given?
-      response
+    def choice(*args, &block)
+      Choice.new(*args, &block).run
     end
 
     def bundle
@@ -109,6 +93,47 @@ module Stairs
 
     def stairs_info(message)
       puts message.light_black
+    end
+
+    private
+
+    class Choice
+      # TODO: shouldn't care about case?
+      def initialize(question, choices=%w[Y N], &block)
+        @question = question
+        @choices = choices
+        @block = block
+      end
+
+      def run
+        block.call processed_response if block
+        processed_response
+      end
+
+      private
+
+      attr_reader :question, :choices, :block
+
+      def prompt
+        "#{question} (#{choices.join("/")}): "
+      end
+
+      def processed_response
+        @processed_response ||= case response
+        when "Y"
+          true
+        when "N"
+          false
+        else
+          response
+        end
+      end
+
+      def response
+        @reponse ||= Stairs::Util::CLI.collect prompt.blue do |value, i|
+          choices.include? value
+        end
+      end
     end
   end
 end

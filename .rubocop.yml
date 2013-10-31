@@ -1,0 +1,38 @@
+StringLiterals:
+  EnforcedStyle: "double_quotes"
+
+LineLength:
+  Max: 80
+
+# This offends when not tabbed way out while using case in assignment
+CaseIndentation:
+  Enabled: false
+
+# This was offending when it shouldn't have been, like in util/file_mutation:21
+UselessAssignment:
+  Enabled: false
+
+# Seems unnecessary?
+ReduceArguments:
+  Enabled: false
+
+# Not a part of our coding conventions
+Documentation:
+  Enabled: false
+
+# Also just not something I've ever done or want to do...
+SpaceAroundEqualsInParameterDefault:
+  Enabled: false
+
+# I don't see why... It's shorthand, just know your ruby!
+SpecialGlobalVars:
+  Enabled: false
+
+# This was offending for a custom method called `collect` not on an `Enumerable`
+CollectionMethods:
+  Enabled: false
+
+# I just don't care so much about clean specs.. Like short methods and short lines
+AllCops:
+  Excludes:
+    - spec/**

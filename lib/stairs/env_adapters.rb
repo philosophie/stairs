@@ -15,7 +15,7 @@ module Stairs
     end
 
     def self.name_for_adapter_class(adapter)
-      ADAPTERS.find { |_n,a| a == adapter }.first
+      ADAPTERS.find { |_n, a| a == adapter }.first
     end
   end
 end
