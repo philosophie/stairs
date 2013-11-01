@@ -73,6 +73,7 @@ module Stairs
 
     # Set or update env var
     def env(name, value)
+      ENV[name] = value
       Stairs.configuration.env_adapter.set name, value
     end
 
