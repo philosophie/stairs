@@ -19,7 +19,7 @@ module Stairs
           File.open filename, "a+" do |file|
             # ensure file ends with newline before appending
             last_line = file.each_line.reduce("") { |m, l| m = l }
-            file.puts "" unless last_line.index /(.*)\n/
+            file.puts "" unless last_line == "" || last_line =~ /(.*)\n/
 
             file.puts string
           end

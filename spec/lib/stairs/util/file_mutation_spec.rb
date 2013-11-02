@@ -51,9 +51,7 @@ describe Stairs::Util::FileMutation do
 
     context "when there is no newline at the bottom" do
       before do
-        File.delete(filename) if File.exists?(filename)
-
-        File.open(filename, "w") do |file|
+        File.open(filename, "w+") do |file|
           file.write("line1\nline2")
         end
       end
@@ -61,6 +59,19 @@ describe Stairs::Util::FileMutation do
       it "adds a newline before appending the line" do
         described_class.write_line "line3", filename
         expect(File.read(filename)).to eq "line1\nline2\nline3\n"
+      end
+    end
+
+    context "when the file is empty" do
+      before do
+        File.open filename, "w+" do |file|
+          file.write ""
+        end
+      end
+
+      it "writes to the first line of the line" do
+        described_class.write_line "line1", filename
+        expect(File.read(filename)).to eq "line1\n"
       end
     end
   end
