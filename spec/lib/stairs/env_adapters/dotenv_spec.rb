@@ -35,4 +35,14 @@ describe Stairs::EnvAdapters::Dotenv do
       subject.set(name, value)
     end
   end
+
+  describe "#unset" do
+    it "delegates to the well tested FileMutation util" do
+      Stairs::Util::FileMutation.should_receive(:remove).with(
+        Regexp.new("^SOMETHING=(.*)\n"),
+        ".env",
+      )
+      subject.unset "SOMETHING"
+    end
+  end
 end

@@ -12,6 +12,10 @@ module Stairs
           ".env",
         )
       end
+
+      def unset(name)
+        Util::FileMutation.remove Regexp.new("^#{name}=(.*)\n"), ".env"
+      end
     end
   end
 end

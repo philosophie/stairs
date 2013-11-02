@@ -5,7 +5,7 @@ module Stairs
         def replace_or_append(pattern, string, filename)
           if File.exists? filename
             contents = File.read filename
-            if contents.index pattern
+            if contents =~ pattern
               contents.sub! pattern, string
               write contents, filename
               return
@@ -13,6 +13,16 @@ module Stairs
           end
 
           write_line string, filename
+        end
+
+        def remove(pattern, filename)
+          return unless File.exists? filename
+
+          contents = File.read filename
+          if contents =~ pattern
+            contents.slice!(pattern)
+            write contents, filename
+          end
         end
 
         def write_line(string, filename)

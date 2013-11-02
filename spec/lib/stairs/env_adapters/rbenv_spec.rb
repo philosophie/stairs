@@ -37,4 +37,14 @@ describe Stairs::EnvAdapters::Rbenv do
       subject.set(name, value)
     end
   end
+
+  describe "#unset" do
+    it "delegates to the well tested FileMutation util" do
+      Stairs::Util::FileMutation.should_receive(:remove).with(
+        Regexp.new("^SOMETHING=(.*)\n"),
+        ".rbenv-vars",
+      )
+      subject.unset "SOMETHING"
+    end
+  end
 end

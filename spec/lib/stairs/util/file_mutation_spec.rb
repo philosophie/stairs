@@ -35,6 +35,41 @@ describe Stairs::Util::FileMutation do
     end
   end
 
+  describe ".remove" do
+    before do
+      File.open(filename, "w") do |file|
+        file.write "VAR_1=hey\nVAR_2=hello\nVAR_3=hi\n"
+      end
+    end
+
+    context "when the pattern exists in file" do
+      it "removes the match from the file" do
+        subject.remove /^VAR_2=(.*)\n/, filename
+        expect(File.read(filename)).to eq "VAR_1=hey\nVAR_3=hi\n"
+      end
+
+      context "and is the last line without a trailing newline" do
+        before do
+          File.open(filename, "w+") do |file|
+            file.write "VAR_1=hey\nVAR_2=hello\nVAR_3=hi"
+          end
+
+          it "still matches and removes it" do
+            subject.remove /^VAR_3=(.*)\n/, filename
+            expect(File.read(filename)).to eq "VAR_1=hey\nVAR_2=hello\n"
+          end
+        end
+      end
+    end
+
+    context "when the pattern does not exist in file" do
+      it "leaves the file untouched" do
+        subject.remove /^VAR_2=(.*)\n/, filename
+        expect(File.read(filename)).to eq "VAR_1=hey\nVAR_3=hi\n"
+      end
+    end
+  end
+
   describe ".write_line" do
     before do
       File.open(filename, "w") do |file|

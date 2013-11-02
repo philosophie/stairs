@@ -58,7 +58,12 @@ module Stairs
     # Set or update env var
     def env(name, value)
       ENV[name] = value
-      Stairs.configuration.env_adapter.set name, value
+
+      if value
+        Stairs.configuration.env_adapter.set name, value
+      else
+        Stairs.configuration.env_adapter.unset name
+      end
     end
 
     # Replace contents of file

@@ -13,6 +13,10 @@ module Stairs
           ".rbenv-vars",
         )
       end
+
+      def unset(name)
+        Util::FileMutation.remove Regexp.new("^#{name}=(.*)\n"), ".rbenv-vars"
+      end
     end
   end
 end

@@ -13,6 +13,10 @@ module Stairs
           ".rvmrc",
         )
       end
+
+      def unset(name)
+        Util::FileMutation.remove Regexp.new("^export #{name}=(.*)\n"), ".rvmrc"
+      end
     end
   end
 end

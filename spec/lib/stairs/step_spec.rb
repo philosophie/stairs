@@ -214,7 +214,7 @@ describe Stairs::Step do
     let(:adapter) { double("adapter", set: true) }
     before { Stairs.configuration.env_adapter = adapter }
 
-    it "delegates to the adapter" do
+    it "delegates to the adapter's set" do
       adapter.should_receive(:set).with("NAME", "value")
       subject.env "NAME", "value"
     end
@@ -222,6 +222,13 @@ describe Stairs::Step do
     it "writes to ENV simultaneously so Rubyland can access without a reload" do
       ENV.should_receive(:[]=).with("NAME", "value")
       subject.env "NAME", "value"
+    end
+
+    context "with no value" do
+      it "delegates to the adapter's unset" do
+        adapter.should_receive(:unset).with("NAME")
+        subject.env "NAME", nil
+      end
     end
   end
 
