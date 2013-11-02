@@ -43,8 +43,7 @@ $ rake newb
 
 ## Defining scripts
 
-A script composes many steps that setup a project. __Note:__ optional steps are
-not yet implemented.
+A script composes many steps that setup a project.
 
 ```ruby
 bundle
@@ -98,7 +97,7 @@ Run rails s and sidekiq to get rolling!
 ### Collecting values
 ```ruby
 value = provide "Something"
-value = provide "Another", required: false # Not fully implemented
+value = provide "Another", required: false
 provide "More", default: "a-default"
 ```
 
@@ -150,6 +149,7 @@ end
 #### Using predefined steps (aka plugins)
 ```ruby
 setup :s3
+setup :facebook, required: false
 ```
 
 ## Plugins for common setups
@@ -167,9 +167,9 @@ setup :s3
 
 ### Defining custom plugins
 
-Steps inherit from `Stairs::Step`, have a title, description, and
-implement the `run` method. See those included and in the various
-extension gems for examples.
+Steps inherit from `Stairs::Step` and live in `Stairs::Steps`, have a title,
+description, and implement the `run` method. See those included and in the
+various extension gems for examples.
 
 ## Contributing
 

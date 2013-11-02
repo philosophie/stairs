@@ -43,18 +43,18 @@ describe Stairs::Step do
   end
 
   describe "options" do
+    describe "default options" do
+      it "is required" do
+        expect(subject.options[:required]).to be_true
+      end
+    end
+
     context "with options" do
       let(:options) { { something: "cool" } }
       subject { anon_step.new(options) }
 
       it "exposes options on the instance" do
-        expect(subject.options).to eq options
-      end
-    end
-
-    context "without options" do
-      it "sets options to an empty hash" do
-        expect(subject.options).to eq Hash.new
+        expect(subject.options[:something]).to eq "cool"
       end
     end
   end
@@ -76,6 +76,30 @@ describe Stairs::Step do
     it "outputs completed message" do
       output = capture_stdout { subject.run! }
       expect(output).to include "== Completed Step Name"
+    end
+
+    context "when the step is not required" do
+      subject { anon_step.new required: false }
+      before { subject.stub run: true }
+
+      it "prompts the user to decide if we should run the step" do
+        output = follow_prompts("Y") { subject.run! }
+        expect(output).to include "This step is optional, would you like to perform it? (Y/N): "
+      end
+
+      context "user says yes" do
+        it "runs the step" do
+          subject.should_receive :run
+          follow_prompts("Y") { subject.run! }
+        end
+      end
+
+      context "user says no" do
+        it "doesn't run the step" do
+          subject.should_not_receive :run
+          follow_prompts("N") { subject.run! }
+        end
+      end
     end
   end
 

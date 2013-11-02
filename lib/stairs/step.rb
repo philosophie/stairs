@@ -3,12 +3,12 @@ module Stairs
     attr_reader :options
 
     def initialize(options={})
-      @options = options
+      @options = options.reverse_merge required: true
     end
 
     def run!
       stairs_info "== Running #{step_title}"
-      run
+      run if run_step?
       stairs_info "== Completed #{step_title}"
     end
 
@@ -107,6 +107,11 @@ module Stairs
     end
 
     private
+
+    def run_step?
+      return true if options[:required]
+      choice "This step is optional, would you like to perform it?"
+    end
 
     class Choice
       # TODO: shouldn't care about case?
