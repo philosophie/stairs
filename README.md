@@ -55,7 +55,7 @@ setup :s3
 setup :zencoder, required: false
 
 setup :misc do
-  env "CHECK_IT", provide "Cool check it value"
+  env "CHECK_IT", provide("Cool check it value")
 end
 
 rake "db:setup"
