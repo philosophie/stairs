@@ -1,5 +1,11 @@
 module Stairs
   class Step
+    attr_reader :options
+
+    def initialize(options={})
+      @options = options
+    end
+
     def run!
       stairs_info "== Running #{step_title}"
       run
@@ -79,15 +85,15 @@ module Stairs
     # Embed a step where step_name is a symbol that can be resolved to a class
     # in Stairs::Steps or a block is provided to be executed in an instance
     # of Step
-    def setup(step_name, &block)
+    def setup(step_name, options={}, &block)
       if block_given?
-        Step.new.tap do |step|
+        Step.new(options).tap do |step|
           step.define_singleton_method :run, &block
           step.step_title = step_name.to_s.titleize
         end.run!
       else
         klass = "Stairs::Steps::#{step_name.to_s.camelize}".constantize
-        klass.new.run!
+        klass.new(options).run!
       end
     end
 

@@ -42,6 +42,23 @@ describe Stairs::Step do
     end
   end
 
+  describe "options" do
+    context "with options" do
+      let(:options) { { something: "cool" } }
+      subject { anon_step.new(options) }
+
+      it "exposes options on the instance" do
+        expect(subject.options).to eq options
+      end
+    end
+
+    context "without options" do
+      it "sets options to an empty hash" do
+        expect(subject.options).to eq Hash.new
+      end
+    end
+  end
+
   describe "#run!" do
     before { subject.stub run: true }
     before { anon_step.title "Step Name" }
@@ -279,6 +296,16 @@ describe Stairs::Step do
         mock_step_class.any_instance.should_receive(:run!)
         subject.setup :mock_step
       end
+
+      context "with options" do
+        let(:options) { { something: "cool" } }
+        before { mock_step_class.any_instance.stub run!: true }
+
+        it "passes options to the step" do
+          mock_step_class.should_receive(:new).with(options).and_call_original
+          subject.setup :mock_step, options
+        end
+      end
     end
 
     context "with a block" do
@@ -294,6 +321,18 @@ describe Stairs::Step do
       it "runs the block in the context of the new step" do
         output = capture_stdout { call_method }
         expect(output).to include "I'm running in Stairs::Step"
+      end
+
+      context "with options" do
+        let(:options) { { something: "cool" } }
+        before { described_class.any_instance.stub run!: true }
+
+        it "passes options to the step" do
+          instance = subject # Initialize class before asserting against #new
+
+          described_class.should_receive(:new).with(options).and_call_original
+          subject.setup(:custom_step, options) { true }
+        end
       end
     end
   end
