@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Stairs::VERSION
   spec.authors       = ["patbenatar"]
   spec.email         = ["nick@gophilosophie.com"]
-  spec.description   = "A DSL and collection of plugins for easy setup of projects on new development environments."
-  spec.summary       = "A DSL and collection of plugins for easy setup of projects on new development environments."
+  spec.description   = "It's a pain to setup new developers. Stairs is a utility and framework from which to write scripts for faster and easier setup of apps in new development environments. Scripts try to automate as much as possible and provide interactive prompts for everything else."
+  spec.summary       = "Setup Ruby apps in development fast and easy."
   spec.homepage      = "http://github.com/patbenatar/stairs"
   spec.license       = "MIT"
 
