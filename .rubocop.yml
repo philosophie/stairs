@@ -32,6 +32,10 @@ SpecialGlobalVars:
 CollectionMethods:
   Enabled: false
 
+# Cuz we don't use any fancy characters anyway
+Encoding:
+  Enabled: false
+
 # I just don't care so much about clean specs.. Like short methods and short lines
 AllCops:
   Excludes:
