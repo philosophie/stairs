@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "fakefs", "~> 0.4.3"
   spec.add_development_dependency "rubocop", "~> 0.14.1"
   spec.add_development_dependency "guard-rubocop", "~> 1.0.0"
+  spec.add_development_dependency "codeclimate-test-reporter"
 
   spec.add_dependency "activesupport", ">= 3.2.0"
   spec.add_dependency "colorize", "~> 0.6.0"

@@ -1,6 +1,9 @@
 require "bundler"
 Bundler.require
 
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 require "stairs"
 
 Dir["./spec/support/**/*.rb"].each { |f| require f }
