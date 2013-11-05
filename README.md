@@ -62,37 +62,7 @@ rake "db:setup"
 finish "Just run rails s and sidekiq to get rolling!"
 ```
 
-### Example CLI
-
-Given the above script, the CLI might look like this.
-
-```
-$ rake newb
-Looks like you're using rbenv to manage environment variables. Is this correct? (Y/N): Y
-= Running script setup.rb
-== Running bundle
-...
-== Completed bundle
-== Running S3
-AWS access key: 39u39d9u291
-AWS secret: 19jd920i10is0i01i0s01ks0kfknkje
-Do you have an existing bucket? (Y/N): Y
-Bucket name (leave blank for app-dev): my-cool-bucket
-== Completed S3
-== Starting Zencoder
-This step is optional, would you like to perform it? (Y/N): N
-== Completed Zencoder
-== Starting Misc
-Cool check it value: w00t
-== Completed Misc
-== Running db:setup
-...
-== Completed db:setup
-== All done!
-Run rails s and sidekiq to get rolling!
-```
-
-## DSL
+[See Example CLI](#example-cli)
 
 ### Collecting values
 ```ruby
@@ -170,6 +140,37 @@ setup :facebook, required: false
 Steps inherit from `Stairs::Step` and live in `Stairs::Steps`, have a title,
 description, and implement the `run` method. See those included and in the
 various extension gems for examples.
+
+## Example CLI
+
+Given the [example script above](#defining-scripts), the CLI would look like
+this:
+
+```
+$ rake newb
+Looks like you're using rbenv to manage environment variables. Is this correct? (Y/N): Y
+= Running script setup.rb
+== Running bundle
+...
+== Completed bundle
+== Running S3
+AWS access key: 39u39d9u291
+AWS secret: 19jd920i10is0i01i0s01ks0kfknkje
+Do you have an existing bucket? (Y/N): Y
+Bucket name (leave blank for app-dev): my-cool-bucket
+== Completed S3
+== Starting Zencoder
+This step is optional, would you like to perform it? (Y/N): N
+== Completed Zencoder
+== Starting Misc
+Cool check it value: w00t
+== Completed Misc
+== Running db:setup
+...
+== Completed db:setup
+== All done!
+Run rails s and sidekiq to get rolling!
+```
 
 ## Contributing
 
