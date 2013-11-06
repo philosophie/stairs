@@ -1,9 +1,9 @@
 # Stairs
 
-It's a pain to setup new developers. Stairs is a utility and framework from
-which to write scripts for faster and easier setup of apps in new development
-environments. Scripts try to automate as much as possible and provide
-interactive prompts for everything else.
+It's a pain to setup new developers on your codebase. Stairs is a utility and
+framework from which to write scripts for faster and easier setup of apps in
+development environments. Scripts try to automate as much as possible and
+provide interactive prompts for everything else.
 
 Stairs currently supports writing environment variables for rbenv-vars, RVM,
 and dotenv.
@@ -125,15 +125,20 @@ setup :facebook, required: false
 ## Plugins for common setups
 
 ### Built-in
-* `:secret_token` sets a secure random secret token
 
-### Available as extension gems
+* `:secret_token` sets a secure random secret token
+* `:postgresql` quickly setup database.yml for use with PostgreSQL
+* `:facebook` interactive prompt for setting Facebook app credentials
+
+### Available as independent gems
+
+Any plugin that has specific dependencies on third party gems is shipped
+independently to avoid maintaining those dependencies within Stairs.
+
 * `:s3` interactive prompt for setting AWS + S3 bucket access credentials:
   [patbenatar/stairs-steps-s3][s3]
 * `:balanced` automatically creates a test Marketplace on Balanced:
   [patbenatar/stairs-steps-balanced][balanced]
-* `:facebook` interactive prompt for setting Facebook app credentials:
-  [patbenatar/stairs-steps-facebook][facebook]
 
 ### Defining custom plugins
 
