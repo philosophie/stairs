@@ -1,6 +1,6 @@
 # Stairs
 
-It's a pain to setup new developers on your codebase. Stairs makes it easy.
+It's a pain to set up new developers on your codebase. Stairs makes it easy.
 
 ### The Problem
 
