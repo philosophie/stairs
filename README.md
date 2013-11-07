@@ -1,12 +1,21 @@
 # Stairs
 
-It's a pain to setup new developers on your codebase. Stairs is a utility and
-framework from which to write scripts for faster and easier setup of apps in
-development environments. Scripts try to automate as much as possible and
-provide interactive prompts for everything else.
+It's a pain to setup new developers on your codebase. Stairs makes it easy.
 
-Stairs currently supports writing environment variables for rbenv-vars, RVM,
-and dotenv.
+### The Problem
+
+Apps these days come with dependencies—S3, Facebook, Twitter, Zencoder, etc. We
+can stub certain things in development, but we also want to make sure we're
+developing in a realistic setting. Satisfying all of these requirements can
+really slow down onboarding time when adding new developers to your existing
+codebase.
+
+### The Solution
+
+Every codebase should come with a script to set itself up. An interactive
+README, if you will. __Stairs__ aims to provide the tools to make writing these
+scripts fast and easy. Scripts try to automate as much as possible and provide
+interactive prompts for everything else.
 
 [![Build Status](https://travis-ci.org/patbenatar/stairs.png?branch=master)](https://travis-ci.org/patbenatar/stairs)
 [![Code Climate](https://codeclimate.com/github/patbenatar/stairs.png)](https://codeclimate.com/github/patbenatar/stairs)
@@ -81,6 +90,8 @@ dinner = choice "Meat or vegetables?", ["Meat", "Vegetables"]
 ```
 
 ### Setting env vars
+Stairs currently supports writing environment variables for rbenv-vars, RVM, and dotenv.
+
 ```ruby
 env "NAME", value
 ```
