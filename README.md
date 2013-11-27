@@ -44,10 +44,22 @@ require "stairs/tasks"
 
 ## Usage
 
+### Basic
+
 In an app with a `setup.rb`, just run the rake task:
 
 ```
 $ rake newb
+```
+
+### Advanced
+
+If you want more control, use the `stairs` command line utility:
+
+```
+$ stairs --help
+Usage: stairs [options]
+        --use-defaults               Use defaults when available
 ```
 
 ## Defining scripts
