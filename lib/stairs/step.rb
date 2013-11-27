@@ -53,12 +53,6 @@ module Stairs
       Choice.new(*args, &block).run
     end
 
-    def bundle
-      stairs_info "== Running bundle"
-      system "bundle"
-      stairs_info "== Completed bundle"
-    end
-
     def rake(task)
       stairs_info "== Running #{task}"
       system "rake #{task}"

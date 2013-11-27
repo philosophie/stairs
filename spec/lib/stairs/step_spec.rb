@@ -231,25 +231,6 @@ describe Stairs::Step do
     end
   end
 
-  describe "#bundle" do
-    before { subject.stub system: true }
-
-    it "outputs lead-in message" do
-      output = capture_stdout { subject.bundle }
-      expect(output).to include "== Running bundle"
-    end
-
-    it "runs bundle" do
-      subject.should_receive(:system).with("bundle")
-      subject.bundle
-    end
-
-    it "outputs completed message" do
-      output = capture_stdout { subject.bundle }
-      expect(output).to include "== Completed bundle"
-    end
-  end
-
   describe "#rake" do
     before { subject.stub system: true }
 

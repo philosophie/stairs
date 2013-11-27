@@ -67,8 +67,6 @@ Usage: stairs [options]
 A script composes many steps that setup a project.
 
 ```ruby
-bundle
-
 setup :secret_token
 
 setup :s3
@@ -115,11 +113,6 @@ write_line "more: false", "config/settings.yml"
 ```
 
 ### Misc helpers
-
-Run bundle to install gems
-```ruby
-bundle
-```
 
 Run rake tasks
 ```ruby
@@ -178,9 +171,6 @@ this:
 $ rake newb
 Looks like you're using rbenv to manage environment variables. Is this correct? (Y/N): Y
 = Running script setup.rb
-== Running bundle
-...
-== Completed bundle
 == Running S3
 AWS access key: 39u39d9u291
 AWS secret: 19jd920i10is0i01i0s01ks0kfknkje
