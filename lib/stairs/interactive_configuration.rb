@@ -4,9 +4,19 @@ module Stairs
     description "Interactive prompt for configuring Stairs"
 
     def run!
+      if Stairs.configuration.use_defaults
+        use_recommended_adapter!
+      else
+        configure_env_adapter
+      end
+    end
+
+    private
+
+    def configure_env_adapter
       choice prompt do |yes|
         if yes
-          Stairs.configuration.env_adapter = recommended_adapter.new
+          use_recommended_adapter!
         else
           choice "Which would you prefer?", adapter_names do |name|
             adapter_class = Stairs::EnvAdapters::ADAPTERS[name.to_sym]
@@ -16,7 +26,9 @@ module Stairs
       end
     end
 
-    private
+    def use_recommended_adapter!
+      Stairs.configuration.env_adapter = recommended_adapter.new
+    end
 
     def recommended_adapter
       @recommended_adapter ||= Stairs::EnvAdapters.recommended_adapter
