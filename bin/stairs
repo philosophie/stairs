@@ -13,4 +13,8 @@ Stairs.configure do |config|
   end.parse!
 end
 
+# Load Rails environment if we're in Rails
+rails_application = File.expand_path("./config/application.rb")
+require rails_application if File.exists?(rails_application)
+
 Stairs::Runner.new.run!
