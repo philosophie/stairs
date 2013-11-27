@@ -32,5 +32,14 @@ describe Stairs::InteractiveConfiguration do
       follow_prompts("N", "dotenv") { subject.run! }
       expect(Stairs.configuration.env_adapter).to be_a Stairs::EnvAdapters::Dotenv
     end
+
+    context "when Stairs is configured to use defaults" do
+      before { Stairs.configuration.use_defaults = true }
+
+      it "uses the default adapter without asking" do
+        subject.run!
+        expect(Stairs.configuration.env_adapter).to be_a Stairs::EnvAdapters::Rbenv
+      end
+    end
   end
 end

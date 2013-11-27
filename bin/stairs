@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require "stairs"
+
+Stairs.configure do |config|
+  OptionParser.new do |options|
+    options.banner = "Usage: stairs [options]"
+
+    options.on("--use-defaults", "Use defaults when available") do |value|
+      config.use_defaults = value
+    end
+  end.parse!
+end
+
+Stairs::Runner.new.run!

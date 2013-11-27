@@ -40,8 +40,12 @@ module Stairs
       prompt << " (leave blank for #{options[:default]})" if options[:default]
       prompt << ": "
 
-      Stairs::Util::CLI.collect(prompt.blue, required: required) ||
+      if Stairs.configuration.use_defaults && options[:default]
         options[:default]
+      else
+        Stairs::Util::CLI.collect(prompt.blue, required: required) ||
+          options[:default]
+      end
     end
 
     # Prompt user to make a choice

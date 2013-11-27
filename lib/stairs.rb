@@ -10,6 +10,7 @@ module Stairs
   autoload :Configuration, "stairs/configuration"
   autoload :InteractiveConfiguration, "stairs/interactive_configuration"
   autoload :Util, "stairs/util"
+  autoload :Runner, "stairs/runner"
 
   class << self
     def configure
@@ -18,6 +19,10 @@ module Stairs
 
     def configuration
       @configuration ||= Configuration.new
+    end
+
+    def reset_configuration!
+      @configuration = Configuration.new
     end
   end
 end

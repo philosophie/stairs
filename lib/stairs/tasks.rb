@@ -7,8 +7,7 @@ module Stairs
     def install!
       desc "Setup the project"
       task :newb do
-        Stairs::InteractiveConfiguration.new.run!
-        Stairs::Script.new("setup.rb").run!
+        Stairs::Runner.new.run!
       end
     end
   end

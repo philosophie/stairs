@@ -16,7 +16,9 @@ RSpec.configure do |config|
   config.filter_run :focus
 
   config.include MockStdio
+  config.include ConfigurationHelper
 
   config.before(:all, &:silence_output)
   config.after(:all, &:enable_output)
+  config.after(:each, &:reset_configuration)
 end

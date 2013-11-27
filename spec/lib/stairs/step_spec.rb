@@ -121,6 +121,24 @@ describe Stairs::Step do
       end
     end
 
+    context "Stairs is configured to use defaults automatically" do
+      before { Stairs.configuration.use_defaults = true }
+
+      context "but no default is provided" do
+        it "prompts for input as usual" do
+          follow_prompts "here ya go" do
+            expect(subject.provide("Gimme")).to eq "here ya go"
+          end
+        end
+      end
+
+      context "and a default is provided" do
+        it "returns the default without prompting" do
+          expect(subject.provide("Gimme", default: "adefault")).to eq "adefault"
+        end
+      end
+    end
+
     context "with a default" do
       def call_method
         subject.provide "Gimme", default: "adefault"
