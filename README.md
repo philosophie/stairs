@@ -140,11 +140,32 @@ setup :facebook, required: false
 
 ## Plugins for common setups
 
+Some steps support options. Options are specified as a hash like so:
+
+```ruby
+setup :step_name, option_1: "value", option_2: "value"
+```
+
 ### Built-in
 
-* `:secret_token` sets a secure random secret token
-* `:postgresql` quickly setup database.yml for use with PostgreSQL
-* `:facebook` interactive prompt for setting Facebook app credentials
+#### `:secret_token`
+
+Sets a secure random secret token. This will write the following ENV vars:
+`SECRET_TOKEN`
+
+#### `:postgresql`
+
+Quickly setup database.yml for use with PostgreSQL, including sensible defaults.
+
+#### `:facebook`
+
+Tnteractive prompt for setting Facebook app credentials. This will write the
+following ENV vars: `FACEBOOK_ID`, `FACEBOOK_SECRET`
+
+##### Options
+
+* `app_id`: ENV var name for Facebook App ID
+* `app_secret`: ENV var name for Facebook App Secret
 
 ### Available as independent gems
 
@@ -200,7 +221,6 @@ Run rails s and sidekiq to get rolling!
 
 [s3]: http://github.com/patbenatar/stairs-steps-s3
 [balanced]: http://github.com/patbenatar/stairs-steps-balanced
-[facebook]: http://github.com/patbenatar/stairs-steps-facebook
 
 ## Credits
 
