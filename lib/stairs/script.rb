@@ -1,8 +1,9 @@
 module Stairs
   class Script
-    def initialize(filename)
+    def initialize(filename, groups)
       @filename = filename
       @script = File.read(@filename)
+      @groups = groups
     end
 
     def run!
@@ -13,9 +14,9 @@ module Stairs
     private
 
     def run
-      Step.new.instance_eval(script)
+      Step.new(groups).instance_eval(script)
     end
 
-    attr_reader :script, :filename
+    attr_reader :script, :filename, :groups
   end
 end
