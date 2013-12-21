@@ -8,10 +8,6 @@ LineLength:
 CaseIndentation:
   Enabled: false
 
-# This was offending when it shouldn't have been, like in util/file_mutation:21
-UselessAssignment:
-  Enabled: false
-
 # Seems unnecessary?
 ReduceArguments:
   Enabled: false

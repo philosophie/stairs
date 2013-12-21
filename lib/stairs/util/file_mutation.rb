@@ -28,7 +28,7 @@ module Stairs
         def write_line(string, filename)
           File.open filename, "a+" do |file|
             # ensure file ends with newline before appending
-            last_line = file.each_line.reduce("") { |m, l| m = l }
+            last_line = file.each_line.reduce("") { |m, l| l }
             file.puts "" unless last_line == "" || last_line =~ /(.*)\n/
 
             file.puts string
