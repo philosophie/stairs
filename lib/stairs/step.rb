@@ -1,9 +1,12 @@
 module Stairs
   class Step
-    attr_reader :options
+    attr_reader :options, :groups
 
-    def initialize(options={})
+    def initialize(*args)
+      options = args.extract_options!
       @options = options.reverse_merge required: true
+
+      @groups = args.first
     end
 
     def run!
@@ -85,14 +88,18 @@ module Stairs
     # of Step
     def setup(step_name, options={}, &block)
       if block_given?
-        Step.new(options).tap do |step|
+        Step.new(groups, options).tap do |step|
           step.define_singleton_method :run, &block
           step.step_title = step_name.to_s.titleize
         end.run!
       else
         klass = "Stairs::Steps::#{step_name.to_s.camelize}".constantize
-        klass.new(options).run!
+        klass.new(groups, options).run!
       end
+    end
+
+    def group(*names)
+      yield if !groups || (names & groups).any?
     end
 
     def finish(message)

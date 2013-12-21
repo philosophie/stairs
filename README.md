@@ -20,6 +20,21 @@ interactive prompts for everything else.
 [![Build Status](https://travis-ci.org/patbenatar/stairs.png?branch=master)](https://travis-ci.org/patbenatar/stairs)
 [![Code Climate](https://codeclimate.com/github/patbenatar/stairs.png)](https://codeclimate.com/github/patbenatar/stairs)
 
+## Table of Contents
+
+* [Setup](#setup)
+* [Running Scripts](#running-scripts)
+  * [Command Line Utility](#advanced)
+* [Defining Scripts](#defining-scripts)
+  * [Collecting Input](#collecting-values)
+  * [Asking Questions](#asking-questions)
+  * [Setting ENV vars](#setting-env-vars)
+  * [Writing to Files](#writing-files)
+  * [Miscellaneous](#misc-helpers)
+  * [Steps](#steps)
+  * [Groups](#groups)
+* [Plugins](#plugins)
+
 ## Setup
 
 ### Rails
@@ -42,7 +57,7 @@ Same as above, but you'll have to manually add the Stairs Rake tasks to your
 require "stairs/tasks"
 ```
 
-## Usage
+## Running Scripts
 
 ### Basic
 
@@ -60,6 +75,7 @@ If you want more control, use the `stairs` command line utility:
 $ stairs --help
 Usage: stairs [options]
         --use-defaults               Use defaults when available
+    -g, --groups GROUPS              Specify groups to run. e.g. init,reset
 ```
 
 ## Defining scripts
@@ -99,8 +115,9 @@ end
 dinner = choice "Meat or vegetables?", ["Meat", "Vegetables"]
 ```
 
-### Setting env vars
-Stairs currently supports writing environment variables for rbenv-vars, RVM, and dotenv.
+### Setting ENV vars
+Stairs currently supports writing environment variables for rbenv-vars, RVM, and
+dotenv.
 
 ```ruby
 env "NAME", value
@@ -124,7 +141,9 @@ Display a message when setup completes
 finish "Now that you're done, go have a drink!"
 ```
 
-### Defining setup steps
+### Steps
+
+Group related setup procedures into named steps using `setup`:
 
 ```ruby
 setup :a_cool_service do
@@ -133,12 +152,48 @@ end
 ```
 
 #### Using predefined steps (aka plugins)
+
 ```ruby
 setup :s3
 setup :facebook, required: false
 ```
 
-## Plugins for common setups
+[Available Plugins](#plugins)
+
+### Groups
+
+Stairs supports organizing your script into groups in a way similar to what you
+may be used to with Bundler. With groups you can target specific steps to run
+for different use cases (see `-g` option in the [command line utility](#advanced)).
+
+Anything outside of a group will always be executed. Anything within a group
+will only be executed when its group is run. By default, Stairs runs the `newb`
+group with `$ rake newb`.
+
+For example, you may want to run different steps on a brand new setup than you
+would when resetting an existing setup:
+
+```ruby
+group :newb do
+  setup :s3
+end
+
+group :newb, :reset do
+  setup :balanced
+  rake "db:setup"
+end
+```
+
+And then run your reset like so:
+
+```bash
+$ stairs -g reset
+```
+
+## Plugins
+
+Many projects share dependencies. Plugins are predefined setup steps for common
+use cases.
 
 Some steps support options. Options are specified as a hash like so:
 

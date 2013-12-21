@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe Stairs::Step do
   let(:anon_step) { Class.new(described_class) }
-  subject { anon_step.new }
+  let(:groups) { nil }
+  subject { anon_step.new(groups) }
 
   describe "metadata" do
     describe "step_title" do
@@ -42,20 +43,26 @@ describe Stairs::Step do
     end
   end
 
-  describe "options" do
-    describe "default options" do
-      it "is required" do
-        expect(subject.options[:required]).to be_true
+  describe "#initialize" do
+    describe "options" do
+      describe "default options" do
+        it "is required" do
+          expect(subject.options[:required]).to be_true
+        end
+      end
+
+      context "with options" do
+        let(:options) { { something: "cool" } }
+        subject { anon_step.new(options) }
+
+        it "exposes options on the instance" do
+          expect(subject.options[:something]).to eq "cool"
+        end
       end
     end
 
-    context "with options" do
-      let(:options) { { something: "cool" } }
-      subject { anon_step.new(options) }
-
-      it "exposes options on the instance" do
-        expect(subject.options[:something]).to eq "cool"
-      end
+    it "exposes supplied groups on the instance" do
+      expect(subject.groups).to eq groups
     end
   end
 
@@ -314,18 +321,23 @@ describe Stairs::Step do
 
     context "with a valid step_name" do
       let!(:mock_step_class) { Stairs::Steps::MockStep = Class.new(Stairs::Step) }
+      before { mock_step_class.any_instance.stub run!: true }
 
       it "instantiates and runs the step" do
         mock_step_class.any_instance.should_receive(:run!)
         subject.setup :mock_step
       end
 
+      it "passes groups to the step" do
+        mock_step_class.should_receive(:new).with(groups, {}).and_call_original
+        subject.setup :mock_step
+      end
+
       context "with options" do
         let(:options) { { something: "cool" } }
-        before { mock_step_class.any_instance.stub run!: true }
 
         it "passes options to the step" do
-          mock_step_class.should_receive(:new).with(options).and_call_original
+          mock_step_class.should_receive(:new).with(groups, options).and_call_original
           subject.setup :mock_step, options
         end
       end
@@ -334,6 +346,12 @@ describe Stairs::Step do
     context "with a block" do
       def call_method
         subject.setup(:custom_step) { puts "I'm running in #{self.class}" }
+      end
+
+      # Initialize primary subject before asserting against #new for the Step
+      # it initializes
+      def initialize_primary_subject
+        instance = subject
       end
 
       it "sets the new step's title to a titleized version of step_name" do
@@ -346,15 +364,50 @@ describe Stairs::Step do
         expect(output).to include "I'm running in Stairs::Step"
       end
 
+      it "passes groups to the step" do
+        initialize_primary_subject
+
+        described_class.should_receive(:new).with(groups, {}).and_call_original
+        call_method
+      end
+
       context "with options" do
         let(:options) { { something: "cool" } }
         before { described_class.any_instance.stub run!: true }
 
         it "passes options to the step" do
-          instance = subject # Initialize class before asserting against #new
+          initialize_primary_subject
 
-          described_class.should_receive(:new).with(options).and_call_original
+          described_class.should_receive(:new).with(groups, options).and_call_original
           subject.setup(:custom_step, options) { true }
+        end
+      end
+    end
+  end
+
+  describe "#group" do
+    let(:name) { :reset }
+
+    context "when the name is in the groups to run" do
+      let(:groups) { [:reset, :init] }
+
+      it "calls the supplied block" do
+        expect { |b| subject.group(name, &b) }.to yield_control
+      end
+    end
+
+    context "when the name is not in the groups to run" do
+      let(:groups) { [:init] }
+
+      it "does not call the supplied block" do
+        expect { |b| subject.group(name, &b) }.not_to yield_control
+      end
+
+      context "but no groups to run are provided" do
+        let(:groups) { nil }
+
+        it "calls the supplied block" do
+          expect { |b| subject.group(name, &b) }.to yield_control
         end
       end
     end

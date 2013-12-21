@@ -7,7 +7,7 @@ module Stairs
     def install!
       desc "Setup the project"
       task :newb do
-        Stairs::Runner.new.run!
+        Stairs::Runner.new([:newb]).run!
       end
     end
   end

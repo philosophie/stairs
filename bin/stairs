@@ -3,12 +3,22 @@
 require "optparse"
 require "stairs"
 
+groups = nil
+
 Stairs.configure do |config|
   OptionParser.new do |options|
     options.banner = "Usage: stairs [options]"
 
     options.on("--use-defaults", "Use defaults when available") do |value|
       config.use_defaults = value
+    end
+
+    options.on(
+      "-g",
+      "--groups GROUPS",
+      "Specify groups to run. e.g. init,reset"
+    ) do |value|
+      groups = value.split(",").map { |g| g.to_sym } if value
     end
   end.parse!
 end
@@ -17,4 +27,4 @@ end
 rails_application = File.expand_path("./config/application.rb")
 require rails_application if File.exists?(rails_application)
 
-Stairs::Runner.new.run!
+Stairs::Runner.new(groups).run!
