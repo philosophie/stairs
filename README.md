@@ -92,7 +92,7 @@ setup :misc do
   env "CHECK_IT", provide("Cool check it value")
 end
 
-rake "db:setup"
+rake "db:setup db:test:prepare"
 
 finish "Just run rails s and sidekiq to get rolling!"
 ```
