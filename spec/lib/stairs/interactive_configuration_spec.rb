@@ -41,5 +41,13 @@ describe Stairs::InteractiveConfiguration do
         expect(Stairs.configuration.env_adapter).to be_a Stairs::EnvAdapters::Rbenv
       end
     end
+
+    context "when no adapter can be found to recommend" do
+      before { Stairs::EnvAdapters.stub recommended_adapter: nil }
+
+      it "aborts" do
+        expect { subject.run! }.to raise_error SystemExit
+      end
+    end
   end
 end

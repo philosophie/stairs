@@ -14,15 +14,21 @@ module Stairs
     private
 
     def configure_env_adapter
+      require_installed_adapter!
+
       choice prompt do |yes|
         if yes
           use_recommended_adapter!
         else
-          choice "Which would you prefer?", adapter_names do |name|
-            adapter_class = Stairs::EnvAdapters::ADAPTERS[name.to_sym]
-            Stairs.configuration.env_adapter = adapter_class.new
-          end
+          select_env_adapter
         end
+      end
+    end
+
+    def select_env_adapter
+      choice "Which would you prefer?", adapter_names do |name|
+        adapter_class = Stairs::EnvAdapters::ADAPTERS[name.to_sym]
+        Stairs.configuration.env_adapter = adapter_class.new
       end
     end
 
@@ -46,7 +52,16 @@ module Stairs
     end
 
     def adapter_names
-      Stairs::EnvAdapters::ADAPTERS.map { |n, _a| n.to_s }
+      @adapter_names ||= Stairs::EnvAdapters::ADAPTERS.map { |n, _a| n.to_s }
+    end
+
+    def require_installed_adapter!
+      unless recommended_adapter
+        abort <<-MSG
+          Please install a supported ENV variable manager:
+          #{adapter_names.join(", ")}
+        MSG
+      end
     end
   end
 end
