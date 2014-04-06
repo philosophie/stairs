@@ -8,12 +8,20 @@ LineLength:
 CaseIndentation:
   Enabled: false
 
-# Seems unnecessary?
-ReduceArguments:
-  Enabled: false
-
 # Not a part of our coding conventions
 Documentation:
+  Enabled: false
+
+DoubleNegation:
+  Enabled: false
+
+TrailingComma:
+  EnforcedStyleForMultiline: comma
+
+DeprecatedClassMethods:
+  Enabled: false
+
+SingleLineBlockParams:
   Enabled: false
 
 # Also just not something I've ever done or want to do...
@@ -34,5 +42,5 @@ Encoding:
 
 # I just don't care so much about clean specs.. Like short methods and short lines
 AllCops:
-  Excludes:
+  Exclude:
     - spec/**

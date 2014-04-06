@@ -16,7 +16,7 @@ Stairs.configure do |config|
     options.on(
       "-g",
       "--groups GROUPS",
-      "Specify groups to run. e.g. init,reset"
+      "Specify groups to run. e.g. init,reset",
     ) do |value|
       groups = value.split(",").map { |g| g.to_sym } if value
     end

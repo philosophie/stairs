@@ -120,7 +120,7 @@ module Stairs
 
     class Choice
       # TODO: shouldn't care about case?
-      def initialize(question, choices=%w[Y N], &block)
+      def initialize(question, choices=%w(Y N), &block)
         @question = question
         @choices = choices
         @block = block

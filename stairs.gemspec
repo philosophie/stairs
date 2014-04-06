@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rb-fsevent", "~> 0.9.3"
   spec.add_development_dependency "awesome_print", "~> 1.2.0"
   spec.add_development_dependency "fakefs", "~> 0.4.3"
-  spec.add_development_dependency "rubocop", "~> 0.14.1"
+  spec.add_development_dependency "rubocop", "~> 0.20.1"
   spec.add_development_dependency "guard-rubocop", "~> 1.0.0"
   spec.add_development_dependency "codeclimate-test-reporter"
   spec.add_development_dependency "mock_stdio", "~> 0.0.1"
