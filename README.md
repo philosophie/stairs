@@ -83,7 +83,7 @@ Usage: stairs [options]
 A script composes many steps that setup a project.
 
 ```ruby
-setup :secret_token
+setup :secret_key_base
 
 setup :s3
 setup :zencoder, required: false
@@ -203,10 +203,10 @@ setup :step_name, option_1: "value", option_2: "value"
 
 ### Built-in
 
-#### `:secret_token`
+#### `:secret_key_base`
 
 Sets a secure random secret token. This will write the following ENV vars:
-`SECRET_TOKEN`
+`SECRET_KEY_BASE`
 
 #### `:postgresql`
 
