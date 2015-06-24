@@ -5,9 +5,9 @@ module Stairs
     autoload :Dotenv, "stairs/env_adapters/dotenv"
 
     ADAPTERS = {
+      dotenv: Dotenv,
       rbenv: Rbenv,
       rvm: RVM,
-      dotenv: Dotenv,
     }
 
     def self.recommended_adapter
