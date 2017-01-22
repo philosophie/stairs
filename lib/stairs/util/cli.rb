@@ -13,17 +13,16 @@ module Stairs
         end
       end
 
-      private
-
       class Collector
-        def initialize(prompt, options={}, &block)
+        def initialize(prompt, options = {}, &block)
           @prompt = prompt
           @options = options.reverse_merge required: true
           @validator = block
         end
 
         def run
-          times, value = 0, nil
+          times = 0
+          value = nil
 
           until valid?(value, times)
             value = CLI.get(prompt.blue)

@@ -1,12 +1,12 @@
 module Stairs
   class Runner
-    def initialize(groups=nil)
+    def initialize(groups = nil)
       @groups = groups
     end
 
     def run!
       Stairs::InteractiveConfiguration.new.run!
-      Stairs::Script.new("setup.rb", groups).run!
+      Stairs::Script.new('setup.rb', groups).run!
     end
 
     private

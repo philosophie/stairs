@@ -3,19 +3,19 @@ module Stairs
     class RVM
       def self.present?
         `which rvm`
-        $?.success?
+        $CHILD_STATUS.success?
       end
 
       def set(name, value)
         Util::FileMutation.replace_or_append(
           Regexp.new("^export #{name}=(.*)$"),
           "export #{name}=#{value}",
-          ".rvmrc",
+          '.rvmrc'
         )
       end
 
       def unset(name)
-        Util::FileMutation.remove Regexp.new("^export #{name}=(.*)\n"), ".rvmrc"
+        Util::FileMutation.remove Regexp.new("^export #{name}=(.*)\n"), '.rvmrc'
       end
     end
   end

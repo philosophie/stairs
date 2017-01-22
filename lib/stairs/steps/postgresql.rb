@@ -1,8 +1,8 @@
 module Stairs
   module Steps
     class Postgresql < Stairs::Step
-      title "PostgreSQL"
-      description "Setup database.yml for PostgreSQL"
+      title 'PostgreSQL'
+      description 'Setup database.yml for PostgreSQL'
 
       def run
         set_database_name
@@ -10,36 +10,36 @@ module Stairs
         set_username
         set_password
 
-        write contents, "config/database.yml"
+        write contents, 'config/database.yml'
       end
 
       private
 
       def set_database_name
         contents.gsub!(
-          "{{database_name}}",
-          provide("Database name", default: "#{app_name}_development"),
+          '{{database_name}}',
+          provide('Database name', default: "#{app_name}_development")
         )
       end
 
       def set_test_database_name
         contents.gsub!(
-          "{{test_database_name}}",
-          provide("Test database name", default: "#{app_name}_test"),
+          '{{test_database_name}}',
+          provide('Test database name', default: "#{app_name}_test")
         )
       end
 
       def set_username
         contents.gsub!(
-          "{{username}}",
-          provide("User", default: `whoami`.strip),
+          '{{username}}',
+          provide('User', default: `whoami`.strip)
         )
       end
 
       def set_password
         contents.gsub!(
-          "{{password}}",
-          provide("Password", default: ""),
+          '{{password}}',
+          provide('Password', default: '')
         )
       end
 

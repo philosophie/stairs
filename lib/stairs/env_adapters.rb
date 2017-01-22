@@ -1,17 +1,17 @@
 module Stairs
   module EnvAdapters
-    autoload :Rbenv, "stairs/env_adapters/rbenv"
-    autoload :RVM, "stairs/env_adapters/rvm"
-    autoload :Dotenv, "stairs/env_adapters/dotenv"
+    autoload :Rbenv, 'stairs/env_adapters/rbenv'
+    autoload :RVM, 'stairs/env_adapters/rvm'
+    autoload :Dotenv, 'stairs/env_adapters/dotenv'
 
     ADAPTERS = {
       dotenv: Dotenv,
       rbenv: Rbenv,
-      rvm: RVM,
-    }
+      rvm: RVM
+    }.freeze
 
     def self.recommended_adapter
-      ADAPTERS.values.find { |a| a.present? }
+      ADAPTERS.values.find(&:present?)
     end
 
     def self.name_for_adapter_class(adapter)

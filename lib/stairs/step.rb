@@ -36,14 +36,10 @@ module Stairs
     end
 
     # Prompt user to provide input
-    def provide(prompt, options={})
+    def provide(prompt, options = {})
       options.reverse_merge! required: true, default: nil
       required = options[:required] && !options[:default]
-
-      if options[:default]
-        prompt = "#{prompt} (leave blank for #{options[:default]})"
-      end
-      prompt = "#{prompt}: "
+      prompt = "#{defaulted_prompt(prompt, options[:default])}: "
 
       if Stairs.configuration.use_defaults && options[:default]
         options[:default]
@@ -88,7 +84,7 @@ module Stairs
     # Embed a step where step_name is a symbol that can be resolved to a class
     # in Stairs::Steps or a block is provided to be executed in an instance
     # of Step
-    def setup(step_name, options={}, &block)
+    def setup(step_name, options = {}, &block)
       if block_given?
         Step.new(groups, options).tap do |step|
           step.define_singleton_method :run, &block
@@ -105,7 +101,7 @@ module Stairs
     end
 
     def finish(message)
-      puts "== All done!".green
+      puts '== All done!'.green
       puts message.green
     end
 
@@ -117,12 +113,17 @@ module Stairs
 
     def run_step?
       return true if options[:required]
-      choice "This step is optional, would you like to perform it?"
+      choice 'This step is optional, would you like to perform it?'
+    end
+
+    def defaulted_prompt(prompt, default = nil)
+      return prompt if default.nil?
+      "#{prompt} (leave blank for #{default})"
     end
 
     class Choice
       # TODO: shouldn't care about case?
-      def initialize(question, choices=%w(Y N), &block)
+      def initialize(question, choices = %w(Y N), &block)
         @question = question
         @choices = choices
         @block = block
@@ -138,22 +139,22 @@ module Stairs
       attr_reader :question, :choices, :block
 
       def prompt
-        "#{question} (#{choices.join("/")}): "
+        "#{question} (#{choices.join('/')}): "
       end
 
       def processed_response
         @processed_response ||= case response
-        when "Y"
-          true
-        when "N"
-          false
-        else
-          response
-        end
+                                when 'Y'
+                                  true
+                                when 'N'
+                                  false
+                                else
+                                  response
+                                end
       end
 
       def response
-        @reponse ||= Stairs::Util::CLI.collect prompt.blue do |value, i|
+        @reponse ||= Stairs::Util::CLI.collect prompt.blue do |value, _i|
           choices.include? value
         end
       end

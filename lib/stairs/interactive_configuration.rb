@@ -1,7 +1,7 @@
 module Stairs
   class InteractiveConfiguration < Stairs::Step
-    title "Configuration"
-    description "Interactive prompt for configuring Stairs"
+    title 'Configuration'
+    description 'Interactive prompt for configuring Stairs'
 
     def run!
       if Stairs.configuration.use_defaults
@@ -26,7 +26,7 @@ module Stairs
     end
 
     def select_env_adapter
-      choice "Which would you prefer?", adapter_names do |name|
+      choice 'Which would you prefer?', adapter_names do |name|
         adapter_class = Stairs::EnvAdapters::ADAPTERS[name.to_sym]
         Stairs.configuration.env_adapter = adapter_class.new
       end
@@ -45,9 +45,9 @@ module Stairs
     end
 
     def prompt
-      "".tap do |message|
+      ''.tap do |message|
         message << "Looks like you're using #{recommended_adapter_name} to "
-        message << "manage environment variables. Is this correct?"
+        message << 'manage environment variables. Is this correct?'
       end
     end
 
@@ -56,12 +56,12 @@ module Stairs
     end
 
     def require_installed_adapter!
-      unless recommended_adapter
-        abort <<-MSG
-          Please install a supported ENV variable manager:
-          #{adapter_names.join(", ")}
-        MSG
-      end
+      return if recommended_adapter
+
+      abort <<-MSG
+        Please install a supported ENV variable manager:
+        #{adapter_names.join(', ')}
+      MSG
     end
   end
 end

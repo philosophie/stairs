@@ -3,19 +3,19 @@ module Stairs
     class Rbenv
       def self.present?
         `which rbenv-vars`
-        $?.success?
+        $CHILD_STATUS.success?
       end
 
       def set(name, value)
         Util::FileMutation.replace_or_append(
           Regexp.new("^#{name}=(.*)$"),
           "#{name}=#{value}",
-          ".rbenv-vars",
+          '.rbenv-vars'
         )
       end
 
       def unset(name)
-        Util::FileMutation.remove Regexp.new("^#{name}=(.*)\n"), ".rbenv-vars"
+        Util::FileMutation.remove Regexp.new("^#{name}=(.*)\n"), '.rbenv-vars'
       end
     end
   end

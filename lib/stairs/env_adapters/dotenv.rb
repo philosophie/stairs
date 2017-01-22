@@ -9,12 +9,12 @@ module Stairs
         Util::FileMutation.replace_or_append(
           Regexp.new("^#{name}=(.*)$"),
           "#{name}=#{value}",
-          ".env",
+          '.env'
         )
       end
 
       def unset(name)
-        Util::FileMutation.remove Regexp.new("^#{name}=(.*)\n"), ".env"
+        Util::FileMutation.remove Regexp.new("^#{name}=(.*)\n"), '.env'
       end
     end
   end

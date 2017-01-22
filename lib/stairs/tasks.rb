@@ -1,11 +1,11 @@
-require "stairs"
+require 'stairs'
 
 module Stairs
   class Tasks
     include Rake::DSL
 
     def install!
-      desc "Setup the project"
+      desc 'Setup the project'
       task :newb do
         Stairs::Runner.new([:newb]).run!
       end

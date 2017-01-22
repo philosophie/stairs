@@ -1,30 +1,30 @@
 #!/usr/bin/env ruby
 
-require "optparse"
-require "stairs"
+require 'optparse'
+require 'stairs'
 
 groups = nil
 
 Stairs.configure do |config|
   OptionParser.new do |options|
-    options.banner = "Usage: stairs [options]"
+    options.banner = 'Usage: stairs [options]'
 
-    options.on("--use-defaults", "Use defaults when available") do |value|
+    options.on('--use-defaults', 'Use defaults when available') do |value|
       config.use_defaults = value
     end
 
     options.on(
-      "-g",
-      "--groups GROUPS",
-      "Specify groups to run. e.g. init,reset",
+      '-g',
+      '--groups GROUPS',
+      'Specify groups to run. e.g. init,reset'
     ) do |value|
-      groups = value.split(",").map { |g| g.to_sym } if value
+      groups = value.split(',').map(&:to_sym) if value
     end
   end.parse!
 end
 
 # Load Rails environment if we're in Rails
-rails_application = File.expand_path("./config/application.rb")
-require rails_application if File.exists?(rails_application)
+rails_application = File.expand_path('./config/application.rb')
+require rails_application if File.exist?(rails_application)
 
 Stairs::Runner.new(groups).run!

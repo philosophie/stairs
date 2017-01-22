@@ -1,50 +1,50 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Stairs::EnvAdapters::Rbenv do
   subject { described_class.new }
 
-  describe ".present?" do
-    before { described_class.should_receive(:`).with("which rbenv-vars") }
+  describe '.present?' do
+    before { described_class.should_receive(:`).with('which rbenv-vars') }
 
-    context "when rbenv-vars is installed" do
-      before { $?.stub success?: true }
+    context 'when rbenv-vars is installed' do
+      before { $CHILD_STATUS.stub success?: true }
 
-      it "returns true" do
+      it 'returns true' do
         expect(described_class.present?).to be_true
       end
     end
 
-    context "when rbenv-vars is not installed" do
-      before { $?.stub success?: false }
+    context 'when rbenv-vars is not installed' do
+      before { $CHILD_STATUS.stub success?: false }
 
-      it "returns true" do
+      it 'returns true' do
         expect(described_class.present?).to be_false
       end
     end
   end
 
-  describe "#set" do
-    it "delegates to the well tested FileMutation util" do
-      name = "VAR_NAME"
-      value = "the_value"
+  describe '#set' do
+    it 'delegates to the well tested FileMutation util' do
+      name = 'VAR_NAME'
+      value = 'the_value'
 
       Stairs::Util::FileMutation.should_receive(:replace_or_append).with(
         Regexp.new("^#{name}=(.*)$"),
         "#{name}=#{value}",
-        ".rbenv-vars",
+        '.rbenv-vars'
       )
 
       subject.set(name, value)
     end
   end
 
-  describe "#unset" do
-    it "delegates to the well tested FileMutation util" do
+  describe '#unset' do
+    it 'delegates to the well tested FileMutation util' do
       Stairs::Util::FileMutation.should_receive(:remove).with(
         Regexp.new("^SOMETHING=(.*)\n"),
-        ".rbenv-vars",
+        '.rbenv-vars'
       )
-      subject.unset "SOMETHING"
+      subject.unset 'SOMETHING'
     end
   end
 end
