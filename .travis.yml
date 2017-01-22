@@ -1,7 +1,11 @@
 language: ruby
 rvm:
-  - 2.0.0
-  - 1.9.3
+  - 2.2.6
+  - 2.3.3
+  - 2.4.0
+install:
+  - gem update --system
+  - bundle install --jobs=3 --retry=3
 addons:
   code_climate:
     repo_token: 6b9b2949be0934c1ef9c1b4db4ec1568e616d56c9c493ff470fd70dda0d96a08
