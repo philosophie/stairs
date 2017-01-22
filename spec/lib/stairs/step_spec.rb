@@ -187,6 +187,14 @@ describe Stairs::Step do
         end
       end
     end
+
+    context "with frozen string literals (in anticipation of ruby3)" do
+      it "does not attempt to modify frozen string" do
+        follow_prompts "here" do
+          expect { subject.provide("Gimme") }.not_to raise_error
+        end
+      end
+    end
   end
 
   describe "#choice" do

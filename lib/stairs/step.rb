@@ -40,8 +40,10 @@ module Stairs
       options.reverse_merge! required: true, default: nil
       required = options[:required] && !options[:default]
 
-      prompt << " (leave blank for #{options[:default]})" if options[:default]
-      prompt << ": "
+      if options[:default]
+        prompt = "#{prompt} (leave blank for #{options[:default]})"
+      end
+      prompt = "#{prompt}: "
 
       if Stairs.configuration.use_defaults && options[:default]
         options[:default]
