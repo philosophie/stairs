@@ -15,7 +15,8 @@ describe Stairs::InteractiveConfiguration do
 
   describe '#run!' do
     before do
-      Stairs::EnvAdapters.stub recommended_adapter: Stairs::EnvAdapters::Rbenv
+      allow(Stairs::EnvAdapters)
+        .to receive(:recommended_adapter).and_return(Stairs::EnvAdapters::Rbenv)
     end
 
     it 'recommends an adapter' do
@@ -46,7 +47,10 @@ describe Stairs::InteractiveConfiguration do
     end
 
     context 'when no adapter can be found to recommend' do
-      before { Stairs::EnvAdapters.stub recommended_adapter: nil }
+      before do
+        allow(Stairs::EnvAdapters)
+          .to receive(:recommended_adapter).and_return(nil)
+      end
 
       it 'aborts' do
         expect { subject.run! }.to raise_error SystemExit

@@ -47,7 +47,7 @@ describe Stairs::Step do
     describe 'options' do
       describe 'default options' do
         it 'is required' do
-          expect(subject.options[:required]).to be_true
+          expect(subject.options[:required]).to eq true
         end
       end
 
@@ -67,7 +67,7 @@ describe Stairs::Step do
   end
 
   describe '#run!' do
-    before { subject.stub run: true }
+    before { allow(subject).to receive(:run).and_return(true) }
     before { anon_step.title 'Step Name' }
 
     it 'outputs lead-in message' do
@@ -76,7 +76,7 @@ describe Stairs::Step do
     end
 
     it 'calls #run where the implementation lives' do
-      subject.should_receive(:run)
+      expect(subject).to receive(:run)
       subject.run!
     end
 
@@ -87,7 +87,7 @@ describe Stairs::Step do
 
     context 'when the step is not required' do
       subject { anon_step.new required: false }
-      before { subject.stub run: true }
+      before { allow(subject).to receive(:run).and_return(true) }
 
       it 'prompts the user to decide if we should run the step' do
         output = follow_prompts('Y') { subject.run! }
@@ -97,14 +97,14 @@ describe Stairs::Step do
 
       context 'user says yes' do
         it 'runs the step' do
-          subject.should_receive :run
+          expect(subject).to receive(:run)
           follow_prompts('Y') { subject.run! }
         end
       end
 
       context 'user says no' do
         it "doesn't run the step" do
-          subject.should_not_receive :run
+          expect(subject).not_to receive(:run)
           follow_prompts('N') { subject.run! }
         end
       end
@@ -212,11 +212,11 @@ describe Stairs::Step do
     end
 
     it 'returns true for Y' do
-      follow_prompts('Y') { expect(subject.choice('Should I?')).to be_true }
+      follow_prompts('Y') { expect(subject.choice('Should I?')).to eq true }
     end
 
     it 'returns true for Y' do
-      follow_prompts('N') { expect(subject.choice('Should I?')).to be_false }
+      follow_prompts('N') { expect(subject.choice('Should I?')).to eq false }
     end
 
     context 'with available choices provided' do
@@ -255,7 +255,7 @@ describe Stairs::Step do
   end
 
   describe '#rake' do
-    before { subject.stub system: true }
+    before { allow(subject).to receive(:system).and_return(true) }
 
     it 'outputs lead-in message' do
       output = capture_stdout { subject.rake 'the_task' }
@@ -263,7 +263,7 @@ describe Stairs::Step do
     end
 
     it 'runs the rake task' do
-      subject.should_receive(:system).with('rake the_task')
+      expect(subject).to receive(:system).with('rake the_task')
       subject.rake 'the_task'
     end
 
@@ -278,18 +278,18 @@ describe Stairs::Step do
     before { Stairs.configuration.env_adapter = adapter }
 
     it "delegates to the adapter's set" do
-      adapter.should_receive(:set).with('NAME', 'value')
+      expect(adapter).to receive(:set).with('NAME', 'value')
       subject.env 'NAME', 'value'
     end
 
     it 'writes to ENV simultaneously so Rubyland can access without a reload' do
-      ENV.should_receive(:[]=).with('NAME', 'value')
+      expect(ENV).to receive(:[]=).with('NAME', 'value')
       subject.env 'NAME', 'value'
     end
 
     context 'with no value' do
       it "delegates to the adapter's unset" do
-        adapter.should_receive(:unset).with('NAME')
+        expect(adapter).to receive(:unset).with('NAME')
         subject.env 'NAME', nil
       end
     end
@@ -297,8 +297,8 @@ describe Stairs::Step do
 
   describe '#write' do
     it 'delegates to the well tested FileMutation util' do
-      Stairs::Util::FileMutation
-        .should_receive(:write).with('something', 'file.txt')
+      expect(Stairs::Util::FileMutation)
+        .to receive(:write).with('something', 'file.txt')
 
       subject.write('something', 'file.txt')
     end
@@ -306,8 +306,8 @@ describe Stairs::Step do
 
   describe '#write_line' do
     it 'delegates to the well tested FileMutation util' do
-      Stairs::Util::FileMutation
-        .should_receive(:write_line).with('something', 'file.txt')
+      expect(Stairs::Util::FileMutation)
+        .to receive(:write_line).with('something', 'file.txt')
 
       subject.write_line('something', 'file.txt')
     end
@@ -343,15 +343,20 @@ describe Stairs::Step do
       let!(:mock_step_class) do
         Stairs::Steps::MockStep = Class.new(Stairs::Step)
       end
-      before { mock_step_class.any_instance.stub run!: true }
+      before do
+        allow_any_instance_of(mock_step_class)
+          .to receive(:run!).and_return(true)
+      end
 
       it 'instantiates and runs the step' do
-        mock_step_class.any_instance.should_receive(:run!)
+        expect_any_instance_of(mock_step_class).to receive(:run!)
         subject.setup :mock_step
       end
 
       it 'passes groups to the step' do
-        mock_step_class.should_receive(:new).with(groups, {}).and_call_original
+        expect(mock_step_class)
+          .to receive(:new).with(groups, {}).and_call_original
+
         subject.setup :mock_step
       end
 
@@ -359,8 +364,8 @@ describe Stairs::Step do
         let(:options) { { something: 'cool' } }
 
         it 'passes options to the step' do
-          mock_step_class
-            .should_receive(:new).with(groups, options).and_call_original
+          expect(mock_step_class)
+            .to receive(:new).with(groups, options).and_call_original
 
           subject.setup :mock_step, options
         end
@@ -391,19 +396,24 @@ describe Stairs::Step do
       it 'passes groups to the step' do
         initialize_primary_subject
 
-        described_class.should_receive(:new).with(groups, {}).and_call_original
+        expect(described_class)
+          .to receive(:new).with(groups, {}).and_call_original
+
         call_method
       end
 
       context 'with options' do
         let(:options) { { something: 'cool' } }
-        before { described_class.any_instance.stub run!: true }
+        before do
+          allow_any_instance_of(described_class)
+            .to receive(:run!).and_return(true)
+        end
 
         it 'passes options to the step' do
           initialize_primary_subject
 
-          described_class
-            .should_receive(:new).with(groups, options).and_call_original
+          expect(described_class)
+            .to receive(:new).with(groups, options).and_call_original
 
           subject.setup(:custom_step, options) { true }
         end

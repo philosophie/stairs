@@ -132,7 +132,7 @@ describe Stairs::Util::FileMutation do
 
       it 'creates a file' do
         described_class.write 'other content', filename
-        expect(File.exist?(filename)).to be_true
+        expect(File.exist?(filename)).to eq true
       end
 
       it 'writes the contents to the file' do

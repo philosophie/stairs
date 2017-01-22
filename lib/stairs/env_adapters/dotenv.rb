@@ -2,7 +2,7 @@ module Stairs
   module EnvAdapters
     class Dotenv
       def self.present?
-        defined? ::Dotenv
+        !!defined?(::Dotenv)
       end
 
       def set(name, value)

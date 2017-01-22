@@ -4,21 +4,21 @@ describe Stairs::EnvAdapters::RVM do
   subject { described_class.new }
 
   describe '.present?' do
-    before { described_class.should_receive(:`).with('which rvm') }
+    before { expect(described_class).to receive(:`).with('which rvm') }
 
     context 'when rvm is installed' do
-      before { $CHILD_STATUS.stub success?: true }
+      before { allow($CHILD_STATUS).to receive(:success?).and_return(true) }
 
       it 'returns true' do
-        expect(described_class.present?).to be_true
+        expect(described_class.present?).to eq true
       end
     end
 
     context 'when rvm is not installed' do
-      before { $CHILD_STATUS.stub success?: false }
+      before { allow($CHILD_STATUS).to receive(:success?).and_return(false) }
 
       it 'returns true' do
-        expect(described_class.present?).to be_false
+        expect(described_class.present?).to eq false
       end
     end
   end
@@ -28,7 +28,7 @@ describe Stairs::EnvAdapters::RVM do
       name = 'VAR_NAME'
       value = 'the_value'
 
-      Stairs::Util::FileMutation.should_receive(:replace_or_append).with(
+      expect(Stairs::Util::FileMutation).to receive(:replace_or_append).with(
         Regexp.new("^export #{name}=(.*)$"),
         "export #{name}=#{value}",
         '.rvmrc'
@@ -40,7 +40,7 @@ describe Stairs::EnvAdapters::RVM do
 
   describe '#unset' do
     it 'delegates to the well tested FileMutation util' do
-      Stairs::Util::FileMutation.should_receive(:remove).with(
+      expect(Stairs::Util::FileMutation).to receive(:remove).with(
         Regexp.new("^export SOMETHING=(.*)\n"),
         '.rvmrc'
       )

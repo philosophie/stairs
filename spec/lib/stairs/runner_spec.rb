@@ -9,21 +9,23 @@ describe Stairs::Runner do
 
     before do
       # Stub things as to not block IO
-      Stairs::InteractiveConfiguration.any_instance.stub :run!
-      Stairs::Script.any_instance.stub :run!
-      Stairs::Script.stub(:new).and_return(script_double)
+      allow_any_instance_of(Stairs::InteractiveConfiguration).to receive(:run!)
+      allow_any_instance_of(Stairs::Script).to receive(:run!)
+      allow(Stairs::Script).to receive(:new).and_return(script_double)
     end
 
     it 'runs the interactive configuration' do
-      Stairs::InteractiveConfiguration.any_instance.should_receive(:run!)
+      expect_any_instance_of(Stairs::InteractiveConfiguration)
+        .to receive(:run!)
+
       subject.run!
     end
 
     it 'runs all groups in the setup.rb script' do
-      Stairs::Script
-        .should_receive(:new).with('setup.rb', groups).and_return(script_double)
+      expect(Stairs::Script)
+        .to receive(:new).with('setup.rb', groups).and_return(script_double)
 
-      script_double.should_receive(:run!)
+      expect(script_double).to receive(:run!)
 
       subject.run!
     end
@@ -32,7 +34,7 @@ describe Stairs::Runner do
       let(:groups) { [:reset] }
 
       it 'passes the specified groups to the script' do
-        Stairs::Script.should_receive(:new).with('setup.rb', groups)
+        expect(Stairs::Script).to receive(:new).with('setup.rb', groups)
         subject.run!
       end
     end

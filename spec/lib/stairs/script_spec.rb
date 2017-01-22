@@ -27,7 +27,7 @@ describe Stairs::Script do
       end
 
       it 'passes groups to the new instance of Step' do
-        Stairs::Step.should_receive(:new).with(groups)
+        expect(Stairs::Step).to receive(:new).with(groups)
         subject.run!
       end
 

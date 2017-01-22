@@ -5,8 +5,10 @@ describe Stairs::Steps::SecretKeyBase do
 
   describe '#run' do
     it 'generates a securerandom hex and sets to SECRET_KEY_BASE' do
-      SecureRandom.stub hex: 'imtotallysecurebro'
-      subject.should_receive(:env).with('SECRET_KEY_BASE', 'imtotallysecurebro')
+      allow(SecureRandom).to receive(:hex).and_return('imtotallysecurebro')
+      expect(subject)
+        .to receive(:env).with('SECRET_KEY_BASE', 'imtotallysecurebro')
+
       subject.run
     end
   end
